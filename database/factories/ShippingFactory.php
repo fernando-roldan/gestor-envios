@@ -2,7 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Customer;
+use App\Models\Product;
+use App\Models\Quote;
 use App\Models\Shipping;
+use App\Models\Status;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,15 +26,22 @@ class ShippingFactory extends Factory
     public function definition(): array
     {
         return [
-            //
-            /* 'uuid' => Str::uuid(),
-            'customer_id' => Customer::inRandomOrder()->first()?->id ?? Customer::factory(),
-            'status_id' => Status::inRandomOrder()->first()?->id ?? Status::factory(),
-            'product_id' => Product::inRandomOrder()->first()?->id ?? Product::factory(),
-            'user_id' => User::inRandomOrder()->first()?->id ?? User::factory(),
-            'currency' => $this->faker->randomElement(['USD', 'MXN']),
-            'cost' => $this->faker->randomFloat(2, 10, 1000),
-            'quantity' => $this->faker->randomFloat(2, 1, 100), */
+            'uuid' => $this->faker->uuid(),
+            'customer_id' => Customer::inRandomOrder()->value('id'),
+            'status_id' => Status::inRandomOrder()->first()->id,
+            'product_id' => Product::inRandomOrder()->value('id'),
+            'currency' => $this->faker->currencyCode(),
+            'cost' => $this->faker->randomFloat(2, 10, 100),
+            'quantity' => $this->faker->randomFloat(2, 10, 100)
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function($shipping) {
+            Quote::factory()->create([
+                'shipping_id' => $shipping->id,
+            ]);
+        });
     }
 }

@@ -16,9 +16,17 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         //$this->call(RolesSeeder::class);
-        $this->call(RoleAndPermissionsSedeer::class);
-        $this->call(CountriesSeeder::class);
-        $this->call(CountryStatesSeeder::class);
+        $this->call([
+            RoleAndPermissionsSedeer::class,
+            CountriesSeeder::class,
+            CountryStatesSeeder::class,
+            CustomerSeeder::class,
+            CustomerContactSeeder::class,
+            StatusSeeder::class,
+            ProductSeed::class,
+            ShippingSeeder::class,
+            HistoryShippingSeeder::class
+        ]);
 
         //Shipping::factory(5)->create();
     }

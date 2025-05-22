@@ -16,5 +16,7 @@ class HistoryShipping extends Model
         'total_price'
     ];
 
-    
+    public function shipping() {
+        return $this->belongsTo(Shipping::class);
+    }
 }

@@ -51,18 +51,21 @@ class RoleAndPermissionsSedeer extends Seeder
         ]);
 
         User::factory()->superAdmin()->create([
+            'user_name' => 'superAdmin',
             'email' => 'super@example.com',
             'first_name' => 'Super Admin',
             'last_name' => 'Administrador'
         ]);
 
         User::factory()->admin()->create([
+            'user_name' => 'sa',
             'email' => 'admin@example.com',
             'first_name' => 'Admin',
             'last_name' => 'admin'
         ]);
 
         User::factory()->provider()->create([
+            'user_name' => 'proveedor',
             'email' => 'provider@example.com'
         ]);
 

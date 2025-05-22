@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\HistoryShipping;
 use App\Models\Shipping;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,13 +15,19 @@ class ShippingSeeder extends Seeder
      */
     public function run(): void
     {
-        Shipping::factory()
-                ->count(10)
-                ->create()
-                ->each(function($shipping) {
-                    HistoryShipping::factory()
-                        ->count(2)
-                        ->create(['shipping_id' => $shipping->id]);
-                });
+        $provider = User::role('provider')->get();
+
+        if($provider->isEmpty()) {
+
+            $this->command->warn('No hay usuarios con rol de administrador y super administrador');
+            return;
+        }
+
+        foreach($provider as $user) {
+            
+            Shipping::factory()->create([
+                'user_id' => $user->id
+            ]);
+        }
     }
 }

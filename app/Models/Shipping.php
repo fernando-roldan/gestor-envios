@@ -16,7 +16,7 @@ class Shipping extends Model
         'customer_id',
         'status_id',
         'product_id',
-        'provider_id',
+        'user_id',
         'currency',
         'cost',
         'quantity',
@@ -47,9 +47,8 @@ class Shipping extends Model
         return $this->hasMany(Quote::class);
     }
 
-    public function historyQuote() {
+    public function histories() {
 
-        return $this->belongsToMany(Quote::class, 'history_shippings', 'shipping_id', 'quote_id')
-            ->withPivot('status', 'total_price', 'created_at');
+        return $this->hasMany(HistoryShipping::class);
     }
 }

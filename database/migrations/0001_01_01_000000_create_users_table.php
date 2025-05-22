@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('avatar')->nullable();
             $table->boolean('status')->default(true);
             $table->rememberToken();
+            $table->foreignId('created_by_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
 

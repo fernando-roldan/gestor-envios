@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('created_by_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('cascade');
             //$table->foreignId('model_id')->nullable()->constrained('models')->onDelete('cascade');
             $table->foreignId('quote_id')->constrained()->onDelete('cascade');
              $table->uuid('uuid')->nullable()->unique();

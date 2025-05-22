@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, HasApiTokens;
+    use HasFactory, Notifiable, HasRoles, HasApiTokens, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -60,6 +62,35 @@ class User extends Authenticatable
     protected $with = [
         'media'
     ];
+    
+    public static function booted()
+    {
+        parent::boot();
+        static::saving(function ($model) {
+            $model->created_by_id = \App\Helpers\Helpers::isUserLogin() ? \App\Helpers\Helpers::getCurrentUserId() : $model->id;
+        });
+    }
+
+    /**
+     * Get the user's role.
+     */
+    public function getRoleAttribute()
+    {
+        return $this->getRoleNames()->first(); // de Spatie
+    }
+
+    /**
+     * Get the user's all permissions.
+     */
+    public function getPermissionAttribute()
+    {
+        return $this->getAllPermissions();
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class,'country_id');
+    }
     
     /**
      * 

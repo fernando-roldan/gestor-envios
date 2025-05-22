@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('uuid')->unique();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
-            $table->foreignId('status_id')->constrained('status')->onDelete('cascade');
+            $table->foreignId('status_id')->constrained('statuses')->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('currency', 5);
             $table->decimal('cost', 10, 2);
             $table->decimal('quantity', 10, 2);
