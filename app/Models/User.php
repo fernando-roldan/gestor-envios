@@ -124,5 +124,9 @@ class User extends Authenticatable implements HasMedia
 
         return $this->hasMany(Provider::class, 'create_by');
     }
-    
+
+    public function hasAnyRole(array $roles): bool {
+
+        return in_array($this->role, $roles);
+    }
 }

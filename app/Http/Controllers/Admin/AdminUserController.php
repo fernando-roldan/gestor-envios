@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CountryState;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class AdminUserController extends Controller
 {
@@ -13,7 +16,9 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::with('roles')->get();
+        
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -21,7 +26,9 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -29,7 +36,14 @@ class AdminUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_name'     => 'required|string|unique:users|max:120',
+            'first_name'    => 'required|string',
+            'last_name'     => 'string',
+            'email'         => 'required|email|unique:users',
+            'password'      => 'required|confirmed|min:6',
+            'role'          => 'required|exists:roles,name',
+        ]);
     }
 
     /**

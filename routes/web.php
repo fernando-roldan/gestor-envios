@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Provider\ProviderQuoteController;
 use App\Http\Middleware\AdminMiddleware;
@@ -24,20 +25,26 @@ Route::middleware(['auth'])->group(function() {
 
     //Ingreso al Dashboard administradores y proveedores
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard_default');
-    //Rutas de Administrador
+    //Rutas de Administrador y Super Administrador
     Route::group(['as' => 'admin.', 'prefix' => 'admin'], function() {
 
-        Route::middleware(AdminMiddleware::class, ':admin')->group(function() {
+        //Rutas de Super Administrador
+        Route::middleware('admin:super-admin')->group(function() {
+            Route::get('/role-permissions', [RoleController::class, 'index'])->name('role-permissions.index');
+            Route::post('/role-permissions/update', [RoleController::class, 'update'])->name('role-permissions.update');
+        });
+
+        Route::middleware('admin:admin,super-admin')->group(function() {
 
             //Administrador de usuarios
-            Route::get('users', [AdminUserController::class, 'index'])->name('users');
+            Route::resource('users', AdminUserController::class);
         });
     });
 
     //Rutas de Proveedores
     Route::group(['as' => 'provider.', 'prefix' => 'provider'], function() {
         
-        Route::middleware(AdminMiddleware::class, ':provider')->group(function() {
+        Route::middleware('admin:provider')->group(function() {
 
             //Ruta de Cotizaciones
             Route::get('cotizaciones', [ProviderQuoteController::class, 'index'])->name('quote.index');

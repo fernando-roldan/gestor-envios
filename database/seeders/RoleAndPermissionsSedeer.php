@@ -17,14 +17,13 @@ class RoleAndPermissionsSedeer extends Seeder
      */
     public function run(): void
     {
-        $modules = ['shippings', 'quotes', 'status', 'users'];
+        $modules = ['shippings', 'quotes', 'status', 'users', 'products', 'providers', 'customers'];
 
         foreach ($modules as $mod) {
             $module = Module::create(['name' => $mod]);
 
             foreach (['create', 'read', 'update', 'delete'] as $act) {
-                // $perm = Permission::create(['name' => "$act $mod"]);
-                // $module->permissions()->attach($perm);
+                
                 $module->permissions()->create([
                     'name' => "$act $mod"
                 ]);
@@ -42,6 +41,7 @@ class RoleAndPermissionsSedeer extends Seeder
         $admin->givePermissionTo(Permission::whereIn('name', function ($query) {
             $query->select('name')->from('permissions')
                 ->where('name', 'like', 'create%')
+                ->orWhere('name', 'like', 'read%')
                 ->orWhere('name', 'like', 'update%');
         })->get());
 

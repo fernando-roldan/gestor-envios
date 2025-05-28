@@ -14,14 +14,14 @@ class AdminMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
         $user = Auth::user();
         
-        if(!$user || !$user->hasRole($role)) {
+        if (!$user || !$user->hasAnyRole($roles)) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
-
+    
         return $next($request);
     }
 }
