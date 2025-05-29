@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('shipping_id')->constrained()->onDelete('cascade');
             $table->foreignId('provider_id')->constrained()->onDelete('cascade');
+            $table->string('file_path');
             $table->decimal('price', 10, 2);
             $table->decimal('total', 10, 2);
             $table->text('description');

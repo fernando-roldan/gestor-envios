@@ -11,8 +11,16 @@ class AdminShippingController extends Controller
     public function index() 
     {
         $this->authorize('read shippings');
+        $shippings = Shipping::with('customer', 'status', 'product', 'provider')->latest()->get();
 
-        return Shipping::with(['status', 'user'])->get();
+        dd($shippings);
+
+        return view('admin.shipping.index', compact('shippings'));
+    }
+
+    public function create()
+    {
+
     }
 
     public function store(Request $request)
@@ -24,5 +32,18 @@ class AdminShippingController extends Controller
             'status_id' => 'required|exists:status,id',
             'user_id' => 'required|exists:users.id'
         ]));
+    }
+
+    public function uploadDocument(Request $request, Shipping $shipping)
+    {
+        $request->validate([
+            'pdf' => 'required|mimes:pdf|max:2048',
+        ]);
+
+        $path = $request->file('pdf')->store('quotes', 'public');
+
+        $shipping->quote()->create(['file_path' => $path]);
+
+        return redirect()->back()->with('success', 'PDF subido correctamente.');
     }
 }

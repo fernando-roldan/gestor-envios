@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminShippingController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\DashboardController;
@@ -38,13 +39,17 @@ Route::middleware(['auth'])->group(function() {
 
             //Administrador de usuarios
             Route::resource('users', AdminUserController::class);
+            Route::get('get-states', [AdminUserController::class, 'getStates'])->name('user.get-states');
+
+            //Rutas de Envios
+            Route::get('envios', [AdminShippingController::class, 'index'])->name('shipping.index');
         });
     });
 
     //Rutas de Proveedores
     Route::group(['as' => 'provider.', 'prefix' => 'provider'], function() {
         
-        Route::middleware('admin:provider')->group(function() {
+        Route::middleware('admin:provider,admin,super-admin')->group(function() {
 
             //Ruta de Cotizaciones
             Route::get('cotizaciones', [ProviderQuoteController::class, 'index'])->name('quote.index');

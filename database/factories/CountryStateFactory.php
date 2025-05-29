@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Country;
+use App\Models\LcCountry;
 use App\Models\CountryState;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +22,7 @@ class CountryStateFactory extends Factory
     {
         return [
             'name'  => $this->faker->state,
-            'country_id'    => Country::inRandomOrder()->first()?->id ?? Country::factory(),
+            'country_id'    => LcCountry::inRandomOrder()->first()?->id ?? LcCountry::factory(),
         ];
     }
 }

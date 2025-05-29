@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Permission;
 
 class Module extends Model
 {
+    //------------------- ESTE MODELO NO FUNCIONA ---------------------- //
     use HasFactory;
     
     /**
