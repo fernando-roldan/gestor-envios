@@ -42,7 +42,10 @@ Route::middleware(['auth'])->group(function() {
             Route::get('get-states', [AdminUserController::class, 'getStates'])->name('user.get-states');
 
             //Rutas de Envios
-            Route::get('envios', [AdminShippingController::class, 'index'])->name('shipping.index');
+            Route::resource('shipping', AdminShippingController::class);
+            Route::get('shipping/{shipping}/edit-status', [AdminShippingController::class, 'editStatus'])->name('shipping.editStatus');
+            Route::post('shippings/{shipping}/upload-pdf', [AdminShippingController::class, 'uploadDocument'])->name('shippings.uploadPdf');
+            Route::put('shippings/{shipping}/update-status', [AdminShippingController::class, 'updateStatus'])->name('shipping.updateStatus');
         });
     });
 
