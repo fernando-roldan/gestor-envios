@@ -12,11 +12,16 @@ use Illuminate\Support\Str;
 
 class AdminShippingController extends Controller
 {
-    public function index() 
+    public function index(Request $request) 
     {
         $this->authorize('read shippings');
-        $shippings = Shipping::with('customer', 'status', 'product', 'provider')->latest()->get();
+        $shippings = Shipping::with(['customer', 'status', 'product', 'provider'])
+            ->latest()
+            ->paginate(10);
 
+            if($request->ajax()) {
+                return view('admin.shipping.table', compact('shippings'));
+            }
         //dd($shippings);
 
         return view('admin.shipping.index', compact('shippings'));

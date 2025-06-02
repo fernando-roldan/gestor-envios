@@ -1,7 +1,2 @@
-@extends('layouts.app')
-
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+@extends('layouts.simple.master')
+<title>Dashboar GMV Logistica</title>

@@ -25,7 +25,10 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+   public function authenticated()
+   {
+        return redirect()->route('dashboard_default');
+   }
 
     /**
      * Create a new controller instance.
