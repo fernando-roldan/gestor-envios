@@ -74,7 +74,7 @@
 
         <main class="py-4">
             @yield('content')
-            @include('layouts.scripts')
+            @include('layouts.simple.scripts')
         </main>
     </div>
 </body>

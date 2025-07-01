@@ -11,7 +11,19 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard_default');
+        $user = auth()->user();
+        $role = $user->getRoleAttribute();
+
+        if(in_array($role, ['admin', 'super-admin'])) {
+
+            $route = 'admin.';
+
+        } else {
+
+            $route = 'provider.';
+        }
+
+        return view('dashboard_default', compact('route'));
     }
 
     /**

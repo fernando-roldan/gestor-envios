@@ -12,19 +12,44 @@ use Illuminate\Support\Str;
 
 class AdminShippingController extends Controller
 {
-    public function index(Request $request) 
+    public function index() 
     {
         $this->authorize('read shippings');
-        $shippings = Shipping::with(['customer', 'status', 'product', 'provider'])
-            ->latest()
-            ->paginate(10);
 
-            if($request->ajax()) {
-                return view('admin.shipping.table', compact('shippings'));
-            }
-        //dd($shippings);
+        $user = auth()->user();
+        $role = $user->getRoleAttribute();
+        
+        $statuces = Status::all();
+        $statusMap = [
+            1 => ['class' => 'badge-phoenix-secondary', 'icon' => 'fa-stream'],
+            2 => ['class' => 'badge-phoenix-primary', 'icon' => 'fa-shipping-fast'],
+            3 => ['class' => 'badge-phoenix-primary', 'icon' => 'fa-shipping-fast'],
+            4 => ['class' => 'badge-phoenix-success', 'icon' => 'fa-check'],
+            5 => ['class' => 'badge-phoenix-warning', 'icon' => 'fa-box'],
+            6 => ['class' => 'badge-phoenix-info', 'icon' => 'fa-dolly'],
+            7 => ['class' => 'badge-phoenix-info', 'icon' => 'fa-dolly'],
+            8 => ['class' => 'badge-phoenix-danger', 'icon' => 'fa-ban'],
+        ];
 
-        return view('admin.shipping.index', compact('shippings'));
+        if(in_array($role, ['admin', 'super-admin'])) {
+
+            $shippings = Shipping::with('customer', 'status', 'product', 'user')->latest()->get();
+            $route = 'admin.shipping.index';
+
+        } elseif($role === 'provider') {
+
+            $shippings = Shipping::with('customer', 'status', 'product', 'user')
+                ->where('user_id', $user->id)
+                ->latest()->get();
+                
+            $route = 'provider.shipping.index';
+        } else {
+
+            return view('error_403');
+        }
+        //dd($statuces);
+
+        return view($route, compact('shippings', 'statuces', 'statusMap'));
     }
 
     public function create()

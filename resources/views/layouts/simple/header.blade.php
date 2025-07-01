@@ -3,9 +3,9 @@
         <div class="navbar-logo">
         
         <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
-        <a class="navbar-brand me-1 me-sm-3" href="index.html">
+        <a class="navbar-brand me-1 me-sm-3" href="/">
             <div class="d-flex align-items-center">
-            <div class="d-flex align-items-center"><img src="assets/img/icons/logo.png" alt="phoenix" width="27" />
+            <div class="d-flex align-items-center"><img src="{{ asset('assets/img/icons/logo.png')}}" alt="phoenix" width="27" />
                 <h5 class="logo-text ms-2 d-none d-sm-block">phoenix</h5>
             </div>
             </div>
@@ -43,14 +43,14 @@
                 <hr class="my-0" />
                 <h6 class="dropdown-header text-body-highlight fs-9 border-bottom border-translucent py-2 lh-sm">Products</h6>
                 <div class="py-2"><a class="dropdown-item py-2 d-flex align-items-center" href="apps/e-commerce/landing/product-details.html">
-                    <div class="file-thumbnail me-2"><img class="h-100 w-100 object-fit-cover rounded-3" src="assets/img/products/60x60/3.png" alt="" /></div>
+                    <div class="file-thumbnail me-2"><img class="h-100 w-100 object-fit-cover rounded-3" src="{{ asset('assets/img/products/60x60/3.png')}}" alt="" /></div>
                     <div class="flex-1">
                     <h6 class="mb-0 text-body-highlight title">MacBook Air - 13″</h6>
                     <p class="fs-10 mb-0 d-flex text-body-tertiary"><span class="fw-medium text-body-tertiary text-opactity-85">8GB Memory - 1.6GHz - 128GB Storage</span></p>
                     </div>
                 </a>
                 <a class="dropdown-item py-2 d-flex align-items-center" href="apps/e-commerce/landing/product-details.html">
-                    <div class="file-thumbnail me-2"><img class="img-fluid" src="assets/img/products/60x60/3.png" alt="" /></div>
+                    <div class="file-thumbnail me-2"><img class="img-fluid" src="{{ asset('assets/img/products/60x60/3.png')}}" alt="" /></div>
                     <div class="flex-1">
                     <h6 class="mb-0 text-body-highlight title">MacBook Pro - 13″</h6>
                     <p class="fs-10 mb-0 d-flex text-body-tertiary"><span class="fw-medium text-body-tertiary text-opactity-85">30 Sep at 12:30 PM</span></p>
@@ -100,7 +100,7 @@
                 <h6 class="dropdown-header text-body-highlight fs-9 border-bottom border-translucent py-2 lh-sm">Members</h6>
                 <div class="py-2"><a class="dropdown-item py-2 d-flex align-items-center" href="pages/members.html">
                     <div class="avatar avatar-l status-online  me-2 text-body">
-                    <img class="rounded-circle " src="assets/img/team/40x40/10.webp" alt="" />
+                    <img class="rounded-circle " src="{{ asset('assets/img/team/40x40/10.webp') }}" alt="" />
                     
                     </div>
                     <div class="flex-1">
@@ -110,7 +110,7 @@
                 </a>
                 <a class="dropdown-item py-2 d-flex align-items-center" href="pages/members.html">
                     <div class="avatar avatar-l  me-2 text-body">
-                    <img class="rounded-circle " src="assets/img/team/40x40/12.webp" alt="" />
+                    <img class="rounded-circle " src="{{ asset('assets/img/team/40x40/12.webp') }}" alt="" />
                     
                     </div>
                     <div class="flex-1">
@@ -168,7 +168,7 @@
                     <div class="px-2 px-sm-3 py-3 notification-card position-relative read border-bottom">
                     <div class="d-flex align-items-center justify-content-between position-relative">
                         <div class="d-flex">
-                        <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="assets/img/team/40x40/30.webp" alt="" />
+                        <div class="avatar avatar-m status-online me-3"><img class="rounded-circle" src="{{ asset('assets/img/team/40x40/30.webp')}}" alt="" />
                         </div>
                         <div class="flex-1 me-sm-3">
                             <h4 class="fs-9 text-body-emphasis">Jessie Samson</h4>
@@ -343,7 +343,7 @@
         </li>
         <li class="nav-item dropdown"><a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
             <div class="avatar avatar-l ">
-                <img class="rounded-circle " src="assets/img/team/40x40/57.webp" alt="" />
+                <img class="rounded-circle " src="{{ asset('assets/img/team/40x40/57.webp')}}" alt="" />
             
             </div>
             </a>
@@ -352,7 +352,7 @@
                 <div class="card-body p-0">
                 <div class="text-center pt-4 pb-3">
                     <div class="avatar avatar-xl ">
-                    <img class="rounded-circle " src="assets/img/team/72x72/57.webp" alt="" />
+                    <img class="rounded-circle " src="{{ asset('assets/img/team/72x72/57.webp')}}" alt="" />
                     
                     </div>
                     <h6 class="mt-2 text-body-emphasis">Jerry Seinfield</h6>
@@ -376,7 +376,16 @@
                     <li class="nav-item"><a class="nav-link px-3 d-block" href="#!"> <span class="me-2 text-body align-bottom" data-feather="user-plus"></span>Add another account</a></li>
                 </ul>
                 <hr />
-                <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#!"> <span class="me-2" data-feather="log-out"> </span>Sign out</a></div>
+                <div class="px-3"> 
+                    <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();"> 
+                        <span class="me-2" data-feather="log-out"> </span>Sign out
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
                 <div class="my-2 text-center fw-bold fs-10 text-body-quaternary"><a class="text-body-quaternary me-1" href="#!">Privacy policy</a>&bull;<a class="text-body-quaternary mx-1" href="#!">Terms</a>&bull;<a class="text-body-quaternary ms-1" href="#!">Cookies</a></div>
                 </div>
             </div>

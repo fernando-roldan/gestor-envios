@@ -19,7 +19,10 @@ class AdminMiddleware
         $user = Auth::user();
         
         if (!$user || !$user->hasAnyRole($roles)) {
-            abort(403, 'No tienes permiso para acceder a esta página.');
+            
+            // dd($user);
+            // abort(403, 'No tienes permiso para acceder a esta página.');
+            return response()->view('error.403', [], 403);
         }
     
         return $next($request);

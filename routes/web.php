@@ -26,6 +26,10 @@ Route::middleware(['auth'])->group(function() {
 
     //Ingreso al Dashboard administradores y proveedores
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard_default');
+
+    //Ruta de Errores
+    Route::view('error-403', 'error.403')->name('error_403');
+    
     //Rutas de Administrador y Super Administrador
     Route::group(['as' => 'admin.', 'prefix' => 'admin'], function() {
 
@@ -56,6 +60,9 @@ Route::middleware(['auth'])->group(function() {
 
             //Ruta de Cotizaciones
             Route::get('cotizaciones', [ProviderQuoteController::class, 'index'])->name('quote.index');
+
+            //Ruta de Envios proveedores
+            Route::get('shipping', [AdminShippingController::class, 'index'])->name('shipping.index');
         });
     });
 });

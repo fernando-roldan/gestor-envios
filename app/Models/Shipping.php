@@ -51,4 +51,9 @@ class Shipping extends Model
 
         return $this->hasMany(HistoryShipping::class);
     }
+
+    public function user() {
+
+        return $this->belongsTo(User::class);
+    }
 }
